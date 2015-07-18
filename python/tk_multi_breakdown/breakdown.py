@@ -83,7 +83,12 @@ def get_breakdown_items():
     # perform the scene scanning in the main UI thread - a lot of apps are sensitive to these
     # types of operations happening in other threads.
     app = tank.platform.current_bundle()
-    scene_objects = app.engine.execute_in_main_thread(app.execute_hook_method, "hook_scene_operations", "scan_scene")
+    app.log_debug("testing!!!!")
+
+    if app.engine.name == "tk-fusion":
+        scene_objects = app.execute_hook_method("hook_scene_operations", "scan_scene")
+    else:
+        scene_objects = app.engine.execute_in_main_thread(app.execute_hook_method, "hook_scene_operations", "scan_scene")
     # returns a list of dictionaries, each dict being like this:
     # {"node": node_name, "type": "reference", "path": maya_path}
 
